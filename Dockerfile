@@ -8,7 +8,7 @@ RUN apt install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss
 RUN wget https://www.python.org/ftp/python/3.7.10/Python-3.7.10.tgz
 RUN tar -xf Python-3.7.10.tgz
 WORKDIR /jupyter/Python-3.7.10
-# RUN ./configure --enable-optimizations
+RUN ./configure --enable-optimizations
 RUN make install
 # Install Jupyter
 WORKDIR /jupyter
@@ -18,14 +18,14 @@ RUN pip3 install jupyter jupyterlab
 ENV HOME="/root"
 ENV PATH="${HOME}/.local/bin:${PATH}"
 # Disable interactive interface
-RUN export DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 # Install DotNet
 RUN wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 RUN dpkg -i packages-microsoft-prod.deb
 RUN rm packages-microsoft-prod.deb
 RUN apt-get update; apt-get install -y apt-transport-https && apt-get update && apt-get install -y dotnet-sdk-5.0
 # Install DotNet in Jupyter
-RUN dotnet tool install --global Microsoft.dotnet-interactive
+RUN dotnet tool install --global Microsoft.dotnet-interactive --version 1.0.252001
 ENV PATH="${PATH}:${HOME}/.dotnet/tools"
 RUN dotnet interactive jupyter install
 # Setting config file
