@@ -25,7 +25,7 @@ RUN dpkg -i packages-microsoft-prod.deb
 RUN rm packages-microsoft-prod.deb
 RUN apt-get update; apt-get install -y apt-transport-https && apt-get update && apt-get install -y dotnet-sdk-5.0
 # Install DotNet in Jupyter
-RUN dotnet tool install --global Microsoft.dotnet-interactive --version 1.0.252001
+RUN dotnet tool install --global Microsoft.dotnet-interactive --version 1.0.250604
 ENV PATH="${PATH}:${HOME}/.dotnet/tools"
 RUN dotnet interactive jupyter install
 # Setting config file
